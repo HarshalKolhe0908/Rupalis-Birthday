@@ -1,130 +1,107 @@
 export const config = {
   // Personal Information
-  name: "Sarah",
-  
-  // Optional: Background music URL (replace with your own)
-  musicUrl: "", // e.g., "https://example.com/birthday-music.mp3"
-  
-  // Intro Section
-  intro: {
-    message: "Happy Birthday",
+  name: 'Radha',
+
+  // Music Configuration
+  music: {
+    url: '', // Optional: Replace with cinematic ambient music URL
+    enabled: false, // Start muted
+    volume: 0.6,
   },
 
-  // Story Sections
-  story: {
-    welcome: {
-      title: "A Small Birthday Surprise 🎁",
-      description: "I wanted to create something special just for you.",
-    },
-    
-    // Photo gallery - replace image URLs with your own photos
-    gallery: {
-      title: "Our Favorite Memories 📸",
-      photos: [
-        {
-          id: 1,
-          src: "https://images.unsplash.com/photo-1530268729831-4be0efb468a0?w=400&h=500&fit=crop",
-          caption: "Remember this moment?",
-        },
-        {
-          id: 2,
-          src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=500&fit=crop",
-          caption: "Laughter and joy",
-        },
-        {
-          id: 3,
-          src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop",
-          caption: "Beautiful moments",
-        },
-        {
-          id: 4,
-          src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop",
-          caption: "Always smiling",
-        },
-      ],
-    },
-
-    // Things to admire - customize these qualities
-    admire: {
-      title: "Things I Admire About You ✨",
-      qualities: [
-        {
-          id: 1,
-          emoji: "💫",
-          title: "Your Kindness",
-          description: "The way you care for others is truly beautiful",
-        },
-        {
-          id: 2,
-          emoji: "😊",
-          title: "Your Smile",
-          description: "It brightens every room you enter",
-        },
-        {
-          id: 3,
-          emoji: "💪",
-          title: "Your Strength",
-          description: "You inspire me with your resilience",
-        },
-        {
-          id: 4,
-          emoji: "🌟",
-          title: "Your Positivity",
-          description: "You see the good in everything",
-        },
-        {
-          id: 5,
-          emoji: "🎨",
-          title: "Your Creativity",
-          description: "Everything you do has a unique touch",
-        },
-        {
-          id: 6,
-          emoji: "🤗",
-          title: "Your Warmth",
-          description: "You make everyone feel loved",
-        },
-      ],
-    },
-
-    // Birthday wishes
-    wishes: {
-      title: "Birthday Wishes For You 🎉",
-      wishes: [
-        "Wishing you a day filled with joy and laughter.",
-        "May every moment be as special as you are.",
-        "Hope your year ahead brings amazing adventures.",
-        "Celebrating not just today, but the wonderful person you are every day.",
-        "May happiness follow you wherever you go.",
-      ],
-    },
-
-    // Thoughtful message
-    message: {
-      title: "A Thoughtful Corner 💝",
-      text: "I just wanted to make your day feel a little special. You deserve to feel celebrated, appreciated, and loved—not just today, but always. Thank you for being the wonderful person you are.",
-    },
-
-    // Optional gift section
-    gift: {
-      title: "Something For You 🎀",
-      description: "I once thought you might like this",
-      image: "https://images.unsplash.com/photo-1552189549-03eab8442b30?w=400&h=400&fit=crop",
-      note: "A symbol of the thoughtfulness and care I wish for you.",
-    },
+  // PAGE 1: CINEMATIC INTRO
+  cinematicIntro: {
+    backgroundImage: 'https://images.unsplash.com/photo-1513002749550-c59a4a8b04b0?w=1080&q=80',
+    subtitle: 'A little birthday surprise made with care ✨',
+    cta: 'TAP TO BEGIN ✨',
   },
 
-  // Finale Section
-  finale: {
-    mainMessage: "Happy Birthday!",
-    subMessage: "Wishing you happiness, smiles, and beautiful moments ahead ❤️",
-    closingMessage: "Thank you for letting me celebrate with you.",
+  // PAGE 2: MEMORY GALLERY
+  memoryGallery: {
+    title: 'Our Favorite Memories 📸',
+    autoScroll: true,
+    autoScrollInterval: 5000, // 5 seconds
+    photos: [
+      {
+        id: 1,
+        src: 'https://images.unsplash.com/photo-1516991891827-8b1817e3d7fa?w=600&q=80',
+        caption: 'Remember this moment?',
+      },
+      {
+        id: 2,
+        src: 'https://images.unsplash.com/photo-1532572642622-b0694463f3e1?w=600&q=80',
+        caption: 'Laughter and joy',
+      },
+      {
+        id: 3,
+        src: 'https://images.unsplash.com/photo-1439614615377-4ee1e27e9c12?w=600&q=80',
+        caption: 'Beautiful moments',
+      },
+      {
+        id: 4,
+        src: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80',
+        caption: 'Always smiling',
+      },
+    ],
+    hasVideo: false,
+    videoUrl: '',
   },
 
-  // Color customization
-  colors: {
-    primary: "from-orange-400 to-pink-500",
-    secondary: "from-purple-400 to-pink-400",
-    accent: "from-pink-400 to-rose-400",
+  // PAGE 3: RADHA KRISHNA SHAYARI (SPIRITUAL PAGE)
+  radhaKrishnaShayari: {
+    backgroundImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1080&q=80',
+    shayariLines: [
+      'वो चांद भी तुम्हारे आगे सादा लगे,',
+      'हूर फिखी, तुम्हारा नूर ज्यादा लगे,',
+      'मत पूंछो कैसे लगते हो तुम मुझे,',
+      'तुम ऐसे लगते हो जैसे कान्हा को राधा लगे...!!',
+    ],
+    mood: 'Spiritual • Poetic • Timeless',
+  },
+
+  // PAGE 4: SHORT NOTE
+  shortNote: {
+    title: 'A Thoughtful Note 💝',
+    content: 'I wanted to make your birthday feel a little special. Not because you need validation, but because you deserve to know how much you mean. No pressure, no expectations—just genuine care wrapped up in this little experience.',
+    signature: '— With warmth',
+  },
+
+  // PAGE 5: GIFT SECTION
+  giftSection: {
+    title: 'Something For You 🎁',
+    description: 'Something thoughtful I imagined for you ✨',
+    giftImage: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80',
+    note: 'A gift wrapped in hopes and good wishes',
+  },
+
+  // PAGE 6: MOON + SKETCH (WOW MOMENT)
+  moonSketch: {
+    sketchImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
+    moonGlow: true,
+    starryBackground: true,
+    shayariLines: [
+      'Tu bilkul chand ki tarah hai...',
+      'Noor bhi, gurur bhi aur door bhi',
+      'But somehow, you make it beautiful 💫',
+    ],
+    musicSwell: true,
+  },
+
+  // PAGE 7: ENDING PAGE
+  endingPage: {
+    mainText: 'Happy Birthday once again ❤️',
+    subText: 'Wishing you happiness, smiles, peace, and beautiful moments ahead. Thank you for being you ✨',
+    cta: 'Celebrate Again',
+  },
+
+  // COLORS & THEME
+  theme: {
+    primary: '#ec4899',
+    secondary: '#a855f7',
+    accent: '#f43f5e',
+    dark: {
+      from: '#1f2937',
+      to: '#111827',
+    },
   },
 }

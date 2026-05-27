@@ -1,64 +1,83 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import IntroPage from './pages/IntroPage'
-import StoryPage from './pages/StoryPage'
-import FinaleePage from './pages/FinaleePage'
-import { config } from './config'
+import CinematicIntro from './pages/CinematicIntro'
+import MemoryGallery from './pages/MemoryGallery'
+import RadhaKrishnaShayari from './pages/RadhaKrishnaShayari'
+import ShortNote from './pages/ShortNote'
+import GiftSection from './pages/GiftSection'
+import MoonSketch from './pages/MoonSketch'
+import EndingPage from './pages/EndingPage'
+import MusicPlayer from './components/MusicPlayer'
 
-type PageType = 'intro' | 'story' | 'finale'
+type PageType = 'intro' | 'gallery' | 'shayari' | 'note' | 'gift' | 'moon' | 'ending'
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('intro')
   const [musicEnabled, setMusicEnabled] = useState(false)
 
-  // Prevent scrolling on body
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    document.documentElement.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = 'auto'
-      document.documentElement.style.overflow = 'auto'
-    }
-  }, [])
+  const pages: PageType[] = ['intro', 'gallery', 'shayari', 'note', 'gift', 'moon', 'ending']
+  const currentIndex = pages.indexOf(currentPage)
 
-  // Handle music toggle
-  useEffect(() => {
-    if (musicEnabled && config.musicUrl) {
-      // Create audio element if needed
-      const audio = new Audio(config.musicUrl)
-      audio.loop = true
-      audio.play().catch(() => {
-        // Browser may block autoplay
-        console.log('Audio autoplay blocked')
-      })
+  const goToNextPage = () => {
+    if (currentIndex < pages.length - 1) {
+      setCurrentPage(pages[currentIndex + 1])
     }
-  }, [musicEnabled])
+  }
+
+  const replay = () => {
+    setCurrentPage('intro')
+  }
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 overflow-hidden">
+    <div className="w-screen h-screen bg-black overflow-hidden">
+      {/* Music Player */}
+      <MusicPlayer 
+        enabled={musicEnabled} 
+        onChange={setMusicEnabled}
+      />
+
+      {/* Pages */}
       <AnimatePresence mode="wait">
         {currentPage === 'intro' && (
-          <IntroPage
+          <CinematicIntro
             key="intro"
-            onBegin={() => setCurrentPage('story')}
-            musicEnabled={musicEnabled}
-            onMusicToggle={() => setMusicEnabled(!musicEnabled)}
+            onBegin={goToNextPage}
           />
         )}
-        {currentPage === 'story' && (
-          <StoryPage
-            key="story"
-            onComplete={() => setCurrentPage('finale')}
-            musicEnabled={musicEnabled}
-            onMusicToggle={() => setMusicEnabled(!musicEnabled)}
+        {currentPage === 'gallery' && (
+          <MemoryGallery
+            key="gallery"
+            onComplete={goToNextPage}
           />
         )}
-        {currentPage === 'finale' && (
-          <FinaleePage
-            key="finale"
-            onReplay={() => setCurrentPage('intro')}
-            musicEnabled={musicEnabled}
-            onMusicToggle={() => setMusicEnabled(!musicEnabled)}
+        {currentPage === 'shayari' && (
+          <RadhaKrishnaShayari
+            key="shayari"
+            onComplete={goToNextPage}
+          />
+        )}
+        {currentPage === 'note' && (
+          <ShortNote
+            key="note"
+            onComplete={goToNextPage}
+          />
+        )}
+        {currentPage === 'gift' && (
+          <GiftSection
+            key="gift"
+            onComplete={goToNextPage}
+          />
+        )}
+        {currentPage === 'moon' && (
+          <MoonSketch
+            key="moon"
+            onComplete={goToNextPage}
+          />
+        )}
+        {currentPage === 'ending' && (
+          <EndingPage
+            key="ending"
+            onReplay={replay}
           />
         )}
       </AnimatePresence>
