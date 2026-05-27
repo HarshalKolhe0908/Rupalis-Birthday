@@ -35,6 +35,8 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'avenir', 'Helvetica', 'Arial', 'sans-serif'],
         display: ['Poppins', 'system-ui', 'sans-serif'],
+        caveat: ['Caveat', 'cursive'],
+        playfair: ['Playfair Display', 'serif'],
       },
       keyframes: {
         float: {

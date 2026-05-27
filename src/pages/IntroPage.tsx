@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { FloatingParticles, GlowingOrbs } from '../components/FloatingParticles'
 import { MusicToggle } from '../components/TopBar'
 import { Button } from '../components/UI'
+import { ScrollIndicator } from '../components/ScrollIndicator'
 import { config } from '../config'
 
 interface IntroPageProps {
@@ -52,7 +53,7 @@ export default function IntroPage({ onBegin, musicEnabled, onMusicToggle }: Intr
       {/* Background Effects */}
       <GlowingOrbs />
       <FloatingParticles 
-        count={25} 
+        count={35} 
         emojis={['✨', '💫', '⭐', '🎉', '💕', '🎂']} 
       />
 
@@ -71,9 +72,40 @@ export default function IntroPage({ onBegin, musicEnabled, onMusicToggle }: Intr
             type: 'spring',
             stiffness: 100,
           }}
-          className="mb-8"
+          className="mb-8 relative"
         >
-          <span className="text-8xl block animate-bounce">🎂</span>
+          <motion.span 
+            className="text-8xl block"
+            animate={{ 
+              scale: [1, 1.15, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            🎂
+          </motion.span>
+          {/* Floating particles around emoji */}
+          {[0, 1, 2].map((i) => (
+            <motion.span
+              key={i}
+              className="absolute text-3xl"
+              animate={{
+                x: Math.cos((i * 2 * Math.PI) / 3) * 60,
+                y: Math.sin((i * 2 * Math.PI) / 3) * 60,
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                delay: i * 0.3,
+              }}
+            >
+              {['✨', '💫', '⭐'][i]}
+            </motion.span>
+          ))}
         </motion.div>
 
         {/* Main Text */}
@@ -142,34 +174,31 @@ export default function IntroPage({ onBegin, musicEnabled, onMusicToggle }: Intr
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="flex gap-4 mt-8"
+          className="flex gap-4 mt-12"
         >
           {['💝', '🎉', '💫'].map((emoji, index) => (
-            <motion.span
+            <motion.div
               key={index}
-              animate={{ y: [0, -10, 0] }}
+              animate={{ 
+                y: [0, -15, 0],
+                rotate: [0, 5, -5, 0],
+              }}
               transition={{ 
-                duration: 2, 
+                duration: 2.5, 
                 repeat: Infinity,
                 delay: index * 0.2,
+                ease: 'easeInOut',
               }}
-              className="text-3xl"
+              className="text-4xl"
             >
               {emoji}
-            </motion.span>
+            </motion.div>
           ))}
         </motion.div>
       </div>
 
       {/* Bottom decorative text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3, duration: 1 }}
-        className="absolute bottom-8 text-center text-sm text-gray-500"
-      >
-        <p>Scroll or swipe to experience ↓</p>
-      </motion.div>
+      <ScrollIndicator text="Tap to Begin ✨ or Scroll Down to Explore" />
     </motion.div>
   )
 }
