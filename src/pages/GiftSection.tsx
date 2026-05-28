@@ -8,7 +8,7 @@ interface GiftSectionProps {
 
 export default function GiftSection({ onComplete }: GiftSectionProps) {
   const [isRevealed, setIsRevealed] = useState(false)
-  const { title, description, note } = config.giftSection
+  const { title, description } = config.giftSection
   const giftImage = new URL('../assets/Gift.jpg', import.meta.url).href
   
   const handleReveal = () => {
