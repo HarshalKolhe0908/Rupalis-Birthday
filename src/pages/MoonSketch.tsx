@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { config } from '../config'
 
 interface MoonSketchProps {
   onComplete: () => void
 }
 
 export default function MoonSketch({ onComplete }: MoonSketchProps) {
-  const { sketchImage, shayariLines } = config.moonSketch
+  const caption = 'But somehow, you make it beautiful 💫'
+  const moonSketchImage = new URL('../assets/MoonSketch.png', import.meta.url).href
 
   return (
     <motion.div
@@ -14,21 +14,24 @@ export default function MoonSketch({ onComplete }: MoonSketchProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className="w-screen h-screen bg-gradient-to-b from-slate-950 via-indigo-950 to-black relative overflow-hidden"
+      className="w-screen h-screen bg-black relative overflow-hidden"
     >
-      {/* Starry background */}
-      {Array.from({ length: 100 }).map((_, i) => (
+      {/* Deep space dark background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-black" />
+
+      {/* Subtle stars background */}
+      {Array.from({ length: 80 }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-0.5 h-0.5 bg-white rounded-full"
           animate={{
-            opacity: [0.2, 1, 0.2],
-            y: [0, Math.random() * 10 - 5],
+            opacity: [0.2, 0.6, 0.2],
           }}
           transition={{
             duration: 3 + Math.random() * 2,
             repeat: Infinity,
             delay: Math.random() * 2,
+            ease: 'easeInOut',
           }}
           style={{
             left: `${Math.random() * 100}%`,
@@ -37,127 +40,83 @@ export default function MoonSketch({ onComplete }: MoonSketchProps) {
         />
       ))}
 
-      {/* Moon glow effect */}
-      <motion.div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full"
-        animate={{
-          boxShadow: [
-            '0 0 40px rgba(147, 112, 219, 0.3)',
-            '0 0 60px rgba(147, 112, 219, 0.5)',
-            '0 0 40px rgba(147, 112, 219, 0.3)',
-          ],
-        }}
-        transition={{ duration: 3, repeat: Infinity }}
-      >
+      {/* Soft glow particles */}
+      {Array.from({ length: 15 }).map((_, i) => (
         <motion.div
-          className="w-full h-full rounded-full bg-gradient-to-b from-yellow-100 to-yellow-200 shadow-2xl"
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          key={`glow-${i}`}
+          className="absolute w-1 h-1 bg-purple-300/40 rounded-full blur-sm"
+          animate={{
+            y: [0, -200],
+            x: Math.sin((i * Math.PI) / 8) * 100,
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: 6 + Math.random() * 3,
+            repeat: Infinity,
+            delay: i * 0.25,
+          }}
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
         />
-      </motion.div>
+      ))}
 
-      {/* Content container */}
+      {/* Content */}
       <motion.div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
-        {/* Sketch portrait */}
+        {/* Moon sketch image with elegant reveal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="mb-12 relative"
+          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+          className="relative mb-12"
         >
-          {/* Glow effect around portrait */}
+          {/* Soft glow behind image */}
           <motion.div
-            className="absolute -inset-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-2xl"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute -inset-8 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/10 blur-3xl"
+            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 4, repeat: Infinity }}
           />
 
-          {/* Portrait */}
+          {/* Image with premium styling */}
           <motion.img
-            src={sketchImage}
-            alt="Portrait"
-            className="relative w-48 h-48 object-cover rounded-full border-4 border-purple-300/50 shadow-2xl"
-            whileHover={{ scale: 1.05 }}
+            src={moonSketchImage}
+            alt="Moon Sketch"
+            className="w-56 h-56 sm:w-80 sm:h-80 object-contain relative z-10 drop-shadow-2xl"
+            animate={{ scale: [1, 1.02, 1] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           />
-
-          {/* Floating particles around portrait */}
-          {[0, 1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              className="absolute text-2xl"
-              animate={{
-                x: Math.cos((i * Math.PI) / 2) * 80,
-                y: Math.sin((i * Math.PI) / 2) * 80 + 50,
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                delay: i * 0.3,
-              }}
-              style={{
-                left: '50%',
-                top: '50%',
-                marginLeft: '-12px',
-                marginTop: '-12px',
-              }}
-            >
-              ✨
-            </motion.div>
-          ))}
         </motion.div>
 
-        {/* Shayari lines */}
-        <motion.div className="max-w-2xl space-y-6 mb-12">
-          {shayariLines.map((line, index) => (
-            <motion.p
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 1.2 + index * 0.5,
-                duration: 0.8,
-              }}
-              className="font-playfair text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent leading-relaxed"
-            >
-              {line}
-            </motion.p>
-          ))}
-        </motion.div>
+        {/* Caption text - elegant and minimal */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="text-lg sm:text-2xl text-white/90 font-light text-center max-w-md leading-relaxed px-4"
+        >
+          {caption}
+        </motion.p>
 
-        {/* Ambient glow particles */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <motion.div
-            key={`ambient-${i}`}
-            className="absolute w-2 h-2 bg-purple-400/40 rounded-full blur-sm"
-            animate={{
-              x: Math.sin((i * Math.PI) / 4) * 120,
-              y: Math.cos((i * Math.PI) / 4) * 120,
-              opacity: [0.2, 0.6, 0.2],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              delay: i * 0.3,
-            }}
-            style={{
-              left: '50%',
-              top: '50%',
-            }}
-          />
-        ))}
+        {/* Subtle divider */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          className="h-px w-12 bg-gradient-to-r from-transparent via-purple-400 to-transparent my-8 sm:my-10"
+        />
 
         {/* Continue button */}
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            delay: 1.2 + shayariLines.length * 0.5 + 0.5,
-            duration: 0.6,
-          }}
+          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.6, type: 'spring' }}
           onClick={onComplete}
-          className="px-10 py-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all mt-8"
+          whileHover={{ scale: 1.08, y: -3 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all mt-4 sm:mt-6 text-base sm:text-lg"
         >
-          One Last Moment... 💫
+          Continue 💫
         </motion.button>
       </motion.div>
     </motion.div>

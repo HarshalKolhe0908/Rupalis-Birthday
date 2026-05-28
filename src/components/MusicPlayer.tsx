@@ -10,19 +10,54 @@ interface MusicPlayerProps {
 export default function MusicPlayer({ enabled, onChange }: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [volume, setVolume] = useState(0.6)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(enabled)
+  const [userInteracted, setUserInteracted] = useState(false)
 
+  // Initialize audio and handle user interaction
+  useEffect(() => {
+    const handleUserInteraction = async () => {
+      setUserInteracted(true)
+      
+      if (audioRef.current) {
+        try {
+          // Remove muted and play
+          audioRef.current.muted = false
+          await audioRef.current.play()
+        } catch (err) {
+          console.log('Play failed:', err)
+        }
+      }
+    }
+
+    // Add listener once
+    window.addEventListener('click', handleUserInteraction)
+    window.addEventListener('touchstart', handleUserInteraction)
+
+    return () => {
+      window.removeEventListener('click', handleUserInteraction)
+      window.removeEventListener('touchstart', handleUserInteraction)
+    }
+  }, [])
+
+  // Handle play/pause when isPlaying or enabled changes (only after user interaction)
   useEffect(() => {
     if (!audioRef.current) return
 
+    if (!userInteracted) {
+      // Before user interaction, keep audio muted and attempt to load
+      audioRef.current.muted = true
+      return
+    }
+
     if (enabled && isPlaying) {
-      audioRef.current.play().catch(() => {
-        console.log('Audio autoplay blocked by browser')
+      audioRef.current.muted = false
+      audioRef.current.play().catch((err) => {
+        console.log('Failed to play:', err)
       })
     } else {
       audioRef.current.pause()
     }
-  }, [enabled, isPlaying])
+  }, [enabled, isPlaying, userInteracted])
 
   useEffect(() => {
     if (audioRef.current) {
